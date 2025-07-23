@@ -1,5 +1,6 @@
 node_modules
 dist
 .env
+.DS_Store
 
 /src/firebase/doze-check-firebase-adminsdk-fbsvc-e191e0acaa.json
