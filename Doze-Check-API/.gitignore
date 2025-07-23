@@ -2,4 +2,4 @@ node_modules
 dist
 .env
 
-doze-check-firebase-adminsdk-fbsvc-e191e0acaa
+/src/firebase/doze-check-firebase-adminsdk-fbsvc-e191e0acaa.json
