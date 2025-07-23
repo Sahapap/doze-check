@@ -5,6 +5,11 @@ import epworthRouter from './routes/epworth.route'
 import accidentHistoryRouter from './routes/accidentHistory.route'
 import morgan from 'morgan';
 import cors from 'cors'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+console.log('NODE_ENV => ', process.env.NODE_ENV)
 
 const app = express();
 
