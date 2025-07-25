@@ -3,6 +3,7 @@ import exampleRouter from './routes/example.route';
 import stopBangRouter from './routes/stopBang.route'
 import epworthRouter from './routes/epworth.route'
 import accidentHistoryRouter from './routes/accidentHistory.route'
+import submitFormRouter from './routes/submitForm.route'
 import morgan from 'morgan';
 import cors from 'cors'
 import dotenv from 'dotenv'
@@ -24,5 +25,6 @@ app.use('/api/example', exampleRouter);
 app.use('/api/stop-bang', stopBangRouter);
 app.use('/api/epworth', epworthRouter)
 app.use('/api/accident-history', accidentHistoryRouter)
+app.use('/api/submit', submitFormRouter)
 
 export default app;
