@@ -1,37 +1,5 @@
 import { realtimeDB } from '../firebase/firebase'
-
-export interface ISubmitForm{
-    firstName: string
-    lastName: string
-    phoneNumber: string
-    hourSleepPerDay: number
-    stopBang: {
-        height: number
-        weight: number
-        gender: string
-        neckCircumference: number
-        snoring: boolean
-        tired: boolean
-        observed: boolean
-        bloodPressure: boolean
-        bmiMoreThan30: boolean
-        ageMoreThan50: boolean
-        neckCircumferenceMoreThan40: boolean
-        isMale: boolean
-    }
-    epworth: {
-        sittingAndReading: number
-        watchingTv: number
-        stillSitting: number
-        sittingInCar: number
-        lyingBack: number
-        talking: number
-        launchSitting: number
-        carStopping: number
-    }
-    accidentHistory: boolean,
-    keyName?: string
-}
+import { ISubmitForm } from '../interfaces/SubmitForm';
 
 const submitAssessment = async(payload: ISubmitForm) => {
     const snapshot = await realtimeDB.ref('messages')

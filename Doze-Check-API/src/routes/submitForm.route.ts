@@ -4,8 +4,7 @@ import { submitAssessment } from '../controllers/submitForm.controller'
 const router = Router();
 
 router.put('/', async(req, res) => {
-    const body = req.body
-    const result = await submitAssessment(body)
+    const result = await submitAssessment(req.body)
     res.json(result);
 });
 
