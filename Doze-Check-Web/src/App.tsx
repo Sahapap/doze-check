@@ -2,8 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import RegisterPage from './pages/RegisterPage'
 import MainLayout from './layouts/MainLayout';
-import StopBangAssessment from './pages/StopBangAssessment';
 import EpworthAssessment from './pages/EpworthAssessment';
+import StopBangAssessment from './pages/StopBangAssessment';
 
 function App() {
 
