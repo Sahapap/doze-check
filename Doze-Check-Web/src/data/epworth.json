@@ -1,0 +1,62 @@
+{
+    "topic": "แบบทดสอบ Epworth Sleepiness Scale",
+    "description": "ให้คำแนนความมีโอกาสจะงีบหลับในสถานการณ์ต่อไปนี้",
+    "assessments":[
+        {
+            "id": "epworth-assessment-01",
+            "name": "situation1",
+            "question": "ขณะกำลังนั่งและอ่านหนังสือ"
+        },
+        {
+            "id": "epworth-assessment-02",
+            "name": "situation2",
+            "question": "ขณะกำลังดูโทรทัศน์"
+        },
+        {
+            "id": "epworth-assessment-03",
+            "name": "situation3",
+            "question": "ขณะกำลังนั่งเฉยๆในที่สาธารณะ เช่น ในโรงภาพยนต์หรือที่ประชุมสัมมนา"
+        },
+        {
+            "id": "epworth-assessment-04",
+            "name": "situation4",
+            "question": "ขณะกำลังนั่งเป็นผู้โดยสารในรถ นานกว่า 1 ชั่วโมงอย่างต่อเนื่อง"
+        },
+        {
+            "id": "epworth-assessment-05",
+            "name": "situation5",
+            "question": "ขณะกำลังได้นอนเอนหลังเผื่อพักผ่อนในตอนบ่ายถ้ามีโอกาส"
+        },
+        {
+            "id": "epworth-assessment-06",
+            "name": "situation6",
+            "question": "ขณะกำลังนั่งหและพูดคุยกับผู้อื่น"
+        },
+        {
+            "id": "epworth-assessment-07",
+            "name": "situation7",
+            "question": "ขณะกำลังนั่งเงียบๆหลังอาหารกลางวันโดยที่ไม่ได้ดื่มแอลกอฮอล์"
+        },
+        {
+            "id": "epworth-assessment-08",
+            "name": "situation8",
+            "question": "ขณะกำลังขับรถแต่หยุดรถเพื่อรอสัญญาณจราจรนาน 2-3 นาที"
+        }
+    ],
+    "options": [
+        {   "value": 0,
+            "label": "ไม่มีความเป็นไปได้ที่จะงีบหรือเผลอหลับ"
+        },
+        {
+            "value": 1,
+            "label": "มีความเป็นไปได้ที่จะงีบหรือเผลอหลับ เล็กน้อย (นานๆ ครั้ง)"
+        },
+        {   "value": 2,
+            "label": "มีความเป็นไปได้ที่จะงีบหรือเผลอหลับ ปานกลาง"
+        },
+        {
+            "value": 3,
+            "label": "มีความเป็นไปได้ที่จะงีบหรือเผลอหลับ สูง (เป็นประจำ)"
+        }
+    ]
+} 
