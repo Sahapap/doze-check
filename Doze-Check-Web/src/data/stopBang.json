@@ -5,41 +5,49 @@
         {
             "id": "stop-bang-01",
             "name": "snoring",
+            "label": "Snoring",
             "question": "คุณนอนกรนหรือไม่? (ดังกว่าเสียงพูด หรือ ดังพอที่จะได้ยินออกไปนอกห้อง)"
         },
         {
             "id": "stop-bang-02",
             "name": "tired",
+            "label": "Tired",
             "question": "คุณมักจะรู้สึกอ่อนเพลีย ล้า หรือ ง่วงนอนระหว่างกลางวันบ่อยๆหรือไม่?"
         },
         {
             "id": "stop-bang-03",
             "name": "observed",
+            "label": "Observed",
             "question": "มีคนเคยสังเกตเห็นว่าคุณหยุดหายใจขณะที่คุณหลับอยู่หรือไม่?"
         },
         {
             "id": "stop-bang-04",
             "name": "pressure",
+            "label": "Pressure",
             "question": "คุณมีความดันโลหิตสูง หรือกำลังรักษาโรคความดันโลหิตสูงอยู่หรือไม่?"
         },
         {
             "id": "stop-bang-05",
             "name": "bmi",
+            "label": "BMI",
             "question": "ดัชนีมวลกายมากกว่า 30 หรือไม่?"
         },
         {
             "id": "stop-bang-06",
             "name": "age",
+            "label": "Age",
             "question": "อายุมากกว่า 50 ปี หรือไม่?"
         },
         {
             "id": "stop-bang-07",
             "name": "neck",
+            "label": "Neck",
             "question": "เส้นรอบวงคอมากกว่า 40 ซม. หรือไม่?"
         },
         {
             "id": "stop-bang-08",
             "name": "gender",
+            "label": "Gender",
             "question": "เป็นเพศชายหรือไม่?"
         }
     ]

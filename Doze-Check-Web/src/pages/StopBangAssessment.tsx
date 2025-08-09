@@ -1,7 +1,6 @@
 import {
     Box,
     FormControl,
-    FormControlLabel,
     Button,
     useTheme,
     useMediaQuery,
@@ -9,15 +8,18 @@ import {
     CardContent,
     Typography,
     RadioGroup,
-    Radio,
     FormHelperText,
     TextField,
     Chip,
+    Divider,
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import data from '../data/stopBang.json'
+import { useEffect, useMemo } from 'react';
+import FormLayout from '../layouts/FormLayout';
+import { CustomLabel, CustomRadio } from '../components/CustomeRadioButton';
 
 // Validation schema
 const schema = yup.object({
@@ -27,8 +29,10 @@ const schema = yup.object({
     snoring: yup.string().required('กรุณาตอบคำถาม'),
     tired: yup.string().required('กรุณาตอบคำถาม'),
     observed: yup.string().required('กรุณาตอบคำถาม'),
-    bloodPressure: yup.string().required('กรุณาตอบคำถาม'),
+    pressure: yup.string().required('กรุณาตอบคำถาม'),
+    bmi: yup.string().required('กรุณาตอบคำถาม'),
     age: yup.string().required('กรุณาตอบคำถาม'),
+    neck: yup.string().required('กรุณาตอบคำถาม'),
     gender: yup.string().required('กรุณาตอบคำถาม')
 });
 
@@ -38,18 +42,19 @@ interface IStopBangFormData {
     neckCircumference: number;
     snoring: string;
     tired: string;
-    observed: string;
-    bloodPressure: string;
+    observed: string
+    pressure: string;
+    bmi: string
     age: string;
+    neck: string
     gender: string;
 }
-
 
 export default function StopBangAssessment(){
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const { control, handleSubmit, watch, formState: { errors } } = useForm<IStopBangFormData>({
+    const { control, handleSubmit, setValue, watch, formState: { errors } } = useForm<IStopBangFormData>({
         resolver: yupResolver(schema),
         defaultValues: {
             weight: undefined,
@@ -58,7 +63,9 @@ export default function StopBangAssessment(){
             snoring: '',
             tired: '',
             observed: '',
-            bloodPressure: '',
+            pressure: '',
+            bmi: '',
+            neck: '',
             age: '',
             gender: ''
         }
@@ -74,7 +81,11 @@ export default function StopBangAssessment(){
         return Math.round((weight / (heightInM * heightInM)) * 10) / 10;
     };
 
-    const bmi = calculateBMI(weight, height);
+    const bmi = useMemo(() => calculateBMI(weight, height), [weight, height]);
+
+    useEffect(() => {
+        if(bmi > 0) setValue('bmi', bmi > 30 ? "1" : "0")
+    }, [bmi, setValue])
 
     const onSubmit = (data: IStopBangFormData) => {
         console.log('Form submitted:', data);
@@ -86,191 +97,236 @@ export default function StopBangAssessment(){
         name: keyof IStopBangFormData;
         color?: string;
     }> = ({ title, description, name, color = '#6366f1' }) => (
-        <Card sx={{ mb: 2, boxShadow: 2 }}>
-        <CardContent>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-            <Typography
-                variant="h6"
-                sx={{
-                color: color,
-                fontWeight: 'bold',
-                fontSize: isMobile ? '1rem' : '1.1rem'
-                }}
-            >
-                {title}
-            </Typography>
-            </Box>
-            <Typography
-            variant="body2"
-            sx={{
-                mb: 2,
-                color: 'text.secondary',
-                fontSize: isMobile ? '0.875rem' : '1rem'
-            }}
-            >
-            {description}
-            </Typography>
-            <Controller
-            name={name}
-            control={control}
-            render={({ field }) => (
-                <FormControl error={!!errors[name]} fullWidth>
-                <RadioGroup
-                    {...field}
-                    row={!isMobile}
+        <Card sx={{ mb: 1, boxShadow: 0, }}>
+            <CardContent sx={{ pb: 0, pt: 0 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <Typography
+                    variant="h6"
                     sx={{
-                    justifyContent: isMobile ? 'flex-start' : 'space-between',
-                    gap: isMobile ? 1 : 2
+                        color: color,
+                        fontWeight: 'bold',
+                        fontSize: isMobile ? '1rem' : '1.1rem'
                     }}
                 >
-                    <FormControlLabel
-                    value="ใช่"
-                    control={<Radio sx={{ color: color }} />}
-                    label="ใช่"
-                    sx={{
-                        backgroundColor: field.value === 'ใช่' ? `${color}15` : 'transparent',
-                        borderRadius: 1,
-                        px: 2,
-                        py: 0.5,
-                        margin: 0,
-                        border: field.value === 'ใช่' ? `2px solid ${color}` : '2px solid transparent'
-                    }}
-                    />
-                    <FormControlLabel
-                    value="ไม่ใช่"
-                    control={<Radio sx={{ color: color }} />}
-                    label="ไม่ใช่"
-                    sx={{
-                        backgroundColor: field.value === 'ไม่ใช่' ? `${color}15` : 'transparent',
-                        borderRadius: 1,
-                        px: 2,
-                        py: 0.5,
-                        margin: 0,
-                        border: field.value === 'ไม่ใช่' ? `2px solid ${color}` : '2px solid transparent'
-                    }}
-                    />
-                </RadioGroup>
-                {errors[name] && (
-                    <FormHelperText>{errors[name]?.message}</FormHelperText>
-                )}
-                </FormControl>
-            )}
-            />
-        </CardContent>
+                    {title}
+                </Typography>
+                </Box>
+                <Typography
+                variant="body2"
+                sx={{
+                    mb: 2,
+                    color: 'text.secondary',
+                    fontSize: isMobile ? '0.875rem' : '1rem'
+                }}
+                >
+                {description}
+                </Typography>
+                <Controller
+                    name={name}
+                    control={control}
+                    render={({ field }) => (
+                        <FormControl error={!!errors[name]} fullWidth>
+                        <RadioGroup
+                            {...field}
+                            row={!isMobile}
+                            sx={{
+                                justifyContent: isMobile ? 'flex-start' : 'space-between',
+                                gap: 0.5,
+                                display: 'flex',
+                                flexDirection: 'row',
+                                border: '1px solid #d1d5db',
+                                borderRadius: '8px',
+                                overflow: 'hidden',
+                                backgroundColor: '#ffffff',
+                                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                            }}
+                        >
+                            <CustomLabel
+                                value="1"
+                                control={<CustomRadio />}
+                                label="ใช่"
+                                sx={{
+                                    borderTopLeftRadius: '8px',
+                                    borderBottomLeftRadius: '8px',
+                                    backgroundColor: field.value === '1' ? '#6366f1' : '#f3f4f6',
+                                    color: field.value === '1' ? '#ffffff' : '#6b7280',
+                                    textAlign: 'center'
+                                }}
+                            />
+                            <CustomLabel
+                                value="0"
+                                control={<CustomRadio />}
+                                label="ไม่ใช่"
+                                //   checked={selectedValue === 'ไม่ใช่'}
+                                sx={{
+                                    borderTopRightRadius: '8px',
+                                    borderBottomRightRadius: '8px',
+                                    backgroundColor: field.value === '0' ? '#6366f1' : '#f3f4f6',
+                                    color: field.value === '0' ? '#ffffff' : '#6b7280',
+                                    textAlign: 'center'
+                                }}
+                            />
+                        </RadioGroup>
+                        {errors[name] && (
+                            <FormHelperText>{errors[name]?.message}</FormHelperText>
+                        )}
+                        </FormControl>
+                    )}
+                />
+            </CardContent>
+            <CardContent sx={{ paddingBottom: 0 }}>
+                <Divider sx={{ my: 2, backgroundColor: '#473BF0' }} />
+            </CardContent>
         </Card>
     );
 
 
     return(
-        <form onSubmit={handleSubmit(onSubmit)}>
-            {/* Weight and Height */}
-            <Card sx={{ mb: 2, boxShadow: 2 }}>
-                <CardContent>
-                <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: 2, mb: 2 }}>
-                    <Controller
-                    name="weight"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            label="น้ำหนัก"
-                            type="number"
-                            fullWidth
-                            InputProps={{ endAdornment: 'กก' }}
-                            error={!!errors.weight}
-                            helperText={errors.weight?.message}
-                            onChange={(e) => field.onChange(parseFloat(e.target.value))}
-                        />
+        <FormLayout
+            backgroundColor='#FFBD7D'
+            header={
+                <>
+                    <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1, color: '#223367' }}>
+                        แบบประเมิน
+                    </Typography>
+                    <Typography variant="h6" sx={{ mb: 2, color: '#223367' }}>
+                        ภาวะหยุดหายใจขณะหลับ
+                    </Typography>
+                    <Typography variant="subtitle1" sx={{ opacity: 0.9, color: '#223367' }}>
+                        (STOP-BANG)
+                    </Typography>
+                    <Divider sx={{ my: 2, backgroundColor: '#FDBC7D' }} />
+                </>
+            }
+            formBody={
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Card sx={{ mb: 1, mt: 1, boxShadow: 0 }}>
+                        <CardContent>
+                            <Typography>
+                                โปรดตอบคำถามต่อไปนี้
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                    {/* Weight and Height */}
+                    <Card sx={{ mb: 1, boxShadow: 0 }}>
+                        <CardContent>
+                            <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row',}}>
+                                <Controller
+                                    name="weight"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <TextField
+                                            {...field}
+                                            label="น้ำหนัก"
+                                            type="number"
+                                            fullWidth
+                                            InputProps={{ endAdornment: 'กก' }}
+                                            error={!!errors.weight}
+                                            helperText={errors.weight?.message}
+                                            onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                                        />
+                                    )}
+                                />
+                            </Box>
+                        </CardContent>
+                    </Card>
+
+                    <Card sx={{ mb: 1, boxShadow: 0 }}>
+                        <CardContent>
+                            <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', }}>
+                                <Controller
+                                    name="height"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <TextField
+                                        {...field}
+                                        label="ส่วนสูง"
+                                        type="number"
+                                        fullWidth
+                                        InputProps={{ endAdornment: 'ซม' }}
+                                        error={!!errors.height}
+                                        helperText={errors.height?.message}
+                                        onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                                        />
+                                    )}
+                                />
+                            </Box>
+                        </CardContent>
+                    </Card>
+
+                    {bmi > 0 && (
+                        <Card sx={{ mb: 0, boxShadow: 0 }}>
+                            <CardContent>
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <Chip
+                                            label={`BMI: ${bmi}`}
+                                            color={bmi >= 25 ? 'error' : bmi >= 23 ? 'warning' : 'success'}
+                                            // size="large"
+                                            sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}
+                                        />
+                                    </Box>
+                            </CardContent>
+                        </Card>
                     )}
-                    />
-                    <Controller
-                    name="height"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                        {...field}
-                        label="ส่วนสูง"
-                        type="number"
-                        fullWidth
-                        InputProps={{ endAdornment: 'ซม' }}
-                        error={!!errors.height}
-                        helperText={errors.height?.message}
-                        onChange={(e) => field.onChange(parseFloat(e.target.value))}
-                        />
-                    )}
-                    />
-                </Box>
-                {bmi > 0 && (
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Chip
-                        label={`BMI: ${bmi}`}
-                        color={bmi >= 25 ? 'error' : bmi >= 23 ? 'warning' : 'success'}
-                        // size="large"
-                        sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}
-                    />
-                    </Box>
-                )}
-                </CardContent>
-            </Card>
 
-            {/* Neck Circumference */}
-            <Card sx={{ mb: 2, boxShadow: 2 }}>
-                <CardContent>
-                <Controller
-                    name="neckCircumference"
-                    control={control}
-                    render={({ field }) => (
-                    <TextField
-                        {...field}
-                        label="เส้นรอบวงคอ"
-                        type="number"
-                        fullWidth
-                        InputProps={{ endAdornment: 'ซม' }}
-                        error={!!errors.neckCircumference}
-                        helperText={errors.neckCircumference?.message || 'วัดเส้นรอบวงคอระดับลูกอาดัม'}
-                        onChange={(e) => field.onChange(parseFloat(e.target.value))}
-                    />
-                    )}
-                />
-                </CardContent>
-            </Card>
+                    {/* Neck Circumference */}
+                    <Card sx={{ mb: 1, boxShadow: 0 }}>
+                        <CardContent>
+                            <Controller
+                                name="neckCircumference"
+                                control={control}
+                                render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    label="เส้นรอบวงคอ"
+                                    type="number"
+                                    fullWidth
+                                    InputProps={{ endAdornment: 'ซม' }}
+                                    error={!!errors.neckCircumference}
+                                    helperText={errors.neckCircumference?.message || 'วัดเส้นรอบวงคอระดับลูกอาดัม'}
+                                    onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                                />
+                                )}
+                            />
+                            <Divider sx={{ my: 2, backgroundColor: '#473BF0' }} />
+                        </CardContent>
+                    </Card>
 
-            {/* Questions */}
-            <QuestionCard
-                title="Snoring"
-                description="คุณกรนเสียงดังระดับที่ (ดังกว่าเสียงพูด หรือดังพอที่จะได้ยินผ่านประตูปิด)หรือไม่?"
-                name="snoring"
-            />
-
-            {data.assessments.map((m) => {
-                return(
-                     <QuestionCard
-                        key={m.id}
-                        title={m.name}
-                        description={m.question}
-                        name={m.name as keyof IStopBangFormData}
-                    />
-                )
-            })}
-
-            <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                size="large"
-                sx={{
-                mt: 3,
-                py: 2,
-                backgroundColor: '#000',
-                '&:hover': {
-                    backgroundColor: '#333'
-                },
-                fontSize: '1.1rem',
-                fontWeight: 'bold'
-                }}
-            >
-                ตัดสิน
-            </Button>
-        </form>
+                    {/* Questions */}
+                    {data.assessments.map((m) => {
+                        return(
+                            <QuestionCard
+                                key={m.id}
+                                title={m.label}
+                                description={m.question}
+                                name={m.name as keyof IStopBangFormData}
+                            />
+                        )
+                    })}
+                    <Card sx={{ mb: 1, boxShadow: 0 }}>
+                        <CardContent>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                fullWidth
+                                size="large"
+                                sx={{
+                                mt: 3,
+                                py: 2,
+                                backgroundColor: '#223367   ',
+                                '&:hover': {
+                                    backgroundColor: '#333'
+                                },
+                                fontSize: '1.1rem',
+                                fontWeight: 'bold'
+                                }}
+                            >
+                                ถัดไป
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </form>
+            }
+        />
     )
 }
