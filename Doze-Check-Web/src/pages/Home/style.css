@@ -1,0 +1,34 @@
+.image-div{
+    text-align: center;
+    padding-top: 125px;
+}
+
+.message-div{
+    position: relative;
+    width: 305px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(90deg, rgba(102, 102, 102, 0) 0%, #000000 50%, rgba(102, 102, 102, 0) 100%);
+}
+
+.image-div > img {
+    border-radius: 60%;
+    background-color: #FFFF;
+    border: 5px solid #FFD000;
+    width: 325px;
+    top: 200px;
+}
+
+@media screen and (max-width: 385px) {
+    .image-div > img {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .message-div {
+        width: 60%;
+        padding: 0;
+    }
+}
+
