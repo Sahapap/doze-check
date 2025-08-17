@@ -17,6 +17,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import data from '../data/epworth.json'
 import FormLayout from '../layouts/FormLayout';
 import { CustomLabel, CustomRadio } from '../components/CustomeRadioButton';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 // Validation schema
 const schema = yup.object({
@@ -42,8 +44,18 @@ type EpworthAssessmentFormData = {
 };
 
 export default function EpworthAssessment() {
+    const location = useLocation()
+    const navigate = useNavigate()
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+    useEffect(() => {
+        console.log("location state: ", location.state)
+        if(!location.state) {
+            alert('กรุณากรอกข้อมูล Stop-Bang')
+            navigate("/register")
+        }
+    }, [location.state, navigate])
 
     const {
         control,
@@ -56,6 +68,13 @@ export default function EpworthAssessment() {
 
     const onSubmit = (data: EpworthAssessmentFormData) => {
         console.log('data', data)
+        const stateData = location.state
+        navigate('/accident-history-assessment', {
+            state: {
+                ...stateData,
+                epworth: data
+            }
+        })
     };
 
     const QuestionCard: React.FC<{

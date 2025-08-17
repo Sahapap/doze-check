@@ -2,11 +2,25 @@ import { Button, Card, CardContent, Container, Divider, Grid, Typography } from 
 import HighRiskResultImg from '../assets/high-risk-result.png'
 import MediumRiskResultImg from '../assets/medium-risk-result.png'
 import LowRiskResultImg from '../assets/low-risk-result.png'
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const riskScore: number = 3
 
 export default function AssessmentResult(){
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        console.log("location state: ", location.state)
+        if(!location.state) {
+            alert('กรุณากรอกข้อมูลแบบทดสอบ')
+            navigate("/register")
+        }
+
+        // call api to calculate score
+    }, [location.state, navigate])
+
     const color = useMemo(() => {
         switch (riskScore){
             case 1: //Low
@@ -89,6 +103,7 @@ export default function AssessmentResult(){
                                     height: '55px',
                                     color: '#FFFFFF'
                                 }}
+                                onClick={() => navigate('/register')}
                             >
                                 กลับไปหน้าแรก
                             </Button>

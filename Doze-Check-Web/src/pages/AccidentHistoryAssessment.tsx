@@ -4,6 +4,8 @@ import * as yup from 'yup';
 import FormLayout from '../layouts/FormLayout';
 import { Button, Card, CardContent, Divider, FormControl, FormHelperText, Radio, RadioGroup, Typography } from '@mui/material';
 import { CustomLabel } from '../components/CustomeRadioButton';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const schema = yup.object({
     isHasAccidentHistory: yup.string().required('กรุณาตอบคำถาม')
@@ -14,13 +16,30 @@ type AccidentHistoryAccessmentFormData = {
 }
 
 export default function AccidentHistoryAssessment(){
+    const location = useLocation()
+    const navigate = useNavigate()
     const { control, handleSubmit, formState: {errors} } = useForm<AccidentHistoryAccessmentFormData>({
         mode: 'onChange',
         resolver: yupResolver(schema)
     })
 
+    useEffect(() => {
+        console.log("location state: ", location.state)
+        if(!location.state) {
+            alert('กรุณากรอกข้อมูล Stop-Bang')
+            navigate("/register")
+        }
+    }, [location.state, navigate])
+
     const onSubmit = (data: AccidentHistoryAccessmentFormData) => {
         console.log('data = ', data)
+        const stateData = location.state
+        navigate('/assessment-result', {
+            state: {
+                ...stateData,
+                accidentHistory: data
+            }
+        })
     }
     return(
         <FormLayout

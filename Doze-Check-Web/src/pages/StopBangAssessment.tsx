@@ -20,6 +20,7 @@ import data from '../data/stopBang.json'
 import { useEffect, useMemo } from 'react';
 import FormLayout from '../layouts/FormLayout';
 import { CustomLabel, CustomRadio } from '../components/CustomeRadioButton';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // Validation schema
 const schema = yup.object({
@@ -51,6 +52,8 @@ interface IStopBangFormData {
 }
 
 export default function StopBangAssessment(){
+    const location = useLocation()
+    const navigate = useNavigate()
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -74,6 +77,14 @@ export default function StopBangAssessment(){
     const weight = watch('weight');
     const height = watch('height');
 
+    useEffect(() => {
+        console.log("location state: ", location.state)
+        if(!location.state) {
+            alert('กรุณากรอกข้อมูล Stop-Bang')
+            navigate("/register")
+        }
+    }, [location.state, navigate])
+
     // Calculate BMI
     const calculateBMI = (weight: number, height: number): number => {
         if (!weight || !height) return 0;
@@ -89,6 +100,13 @@ export default function StopBangAssessment(){
 
     const onSubmit = (data: IStopBangFormData) => {
         console.log('Form submitted:', data);
+        const stateData = location.state
+        navigate('/epworth-assessment', {
+            state: {
+                ...stateData,
+                stopBang: data
+            }
+        })
     };
 
     const QuestionCard: React.FC<{
