@@ -2,10 +2,13 @@ import { Button, Card, CardContent, Container, Divider, Grid, Typography } from 
 import HighRiskResultImg from '../assets/high-risk-result.png'
 import MediumRiskResultImg from '../assets/medium-risk-result.png'
 import LowRiskResultImg from '../assets/low-risk-result.png'
+import HighRiskSign from '../assets/high-risk-sign.png'
+import MediumRiskSign from '../assets/medium-risk-sign.png'
+import LowRiskSign from '../assets/low-risk-sign.png'
 import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const riskScore: number = 3
+const riskScore: number = 1
 
 export default function AssessmentResult(){
     const location = useLocation()
@@ -29,6 +32,16 @@ export default function AssessmentResult(){
                 return '#FF7000'
             default: //High
                 return '#920000'
+        }
+    }, [])
+    const imgSign = useMemo(() => {
+        switch (riskScore){
+            case 1: //Low
+                return LowRiskSign
+            case 2: //Medium
+                return MediumRiskSign
+            default: //High
+                return HighRiskSign
         }
     }, [])
     const imgResult = useMemo(() => {
@@ -66,17 +79,20 @@ export default function AssessmentResult(){
         <div style={{ background: color, minHeight: '100vh' }}>
             <Container maxWidth="sm" sx={{ py: 2, backgroundColor: color }}>
                 <Card sx={{ background: 'white', borderRadius: '20px', textAlign: 'center' }}>
-                    <CardContent sx={{ pt: '30px'}}>
+                    <CardContent sx={{ pt: '30px', pb: 0}}>
                         <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1, color: '#223367' }}>
                             สรุปผลการทดสอบ
                         </Typography>
                         <Divider sx={{ my: 2, backgroundColor: {color}, width: '93px', height: '6px', margin: 'auto' }} />
                     </CardContent>
-                    <CardContent >
+                    <div style={{ textAlign: 'right', paddingLeft: '10%' }}>
+                        <img src={imgSign} width={'10%'} />
+                    </div>
+                    <CardContent sx={{ pt: 0 }}>
                         {/* Image */}
                         <img src={imgResult} width={'34%'} />
                     </CardContent>
-                    <CardContent >
+                    <CardContent sx={{ pb: 0 }}>
                         <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1, color: '#223367' }}>
                             คุณมีความเสี่ยง
                         </Typography>
