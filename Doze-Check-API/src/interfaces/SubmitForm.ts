@@ -15,7 +15,7 @@ export interface ISubmitForm {
 export interface StopBangSection {
     height: number;              // cm
     weight: number;              // kg
-    gender: 'male' | 'female';
+    // gender: 'male' | 'female';
     neckCircumference: number;   // cm
     answers: BooleanAnswer[];    // dynamic Q1-Q8
 }
