@@ -1,9 +1,11 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import BackgroundImg from '../../assets/background.jpg'
 import Logo from '../../assets/logo.png'
 import './style.css'
+import { useNavigate } from 'react-router-dom'
 
 function Home(){
+    const navigate = useNavigate()
     return(
         <Box
             sx={{
@@ -34,6 +36,24 @@ function Home(){
                     แบบประเมินความเสี่ยงจากโรคหยุดหายใจขณะหลับจากการอุดกั้น
                 </Typography>
                 </div>
+            </div>
+            <div style={{ textAlign: 'center', paddingTop: '2%'}}>
+                <Button
+                    variant='contained'
+                    sx={{
+                        background: 'linear-gradient(45deg, #667eea 30%, #764ba2 90%)',
+                        py: 1.5,
+                        borderRadius: 2,
+                        fontWeight: 'bold',
+                        fontSize: '1.1rem',
+                        '&:hover': {
+                        background: 'linear-gradient(45deg, #5a6fd8 30%, #6a4190 90%)',
+                        }
+                    }}
+                    onClick={() => navigate('/register')}
+                >
+                    เริ่มทำแบบสอบถาม
+                </Button>
             </div>
         </Box>
     )
