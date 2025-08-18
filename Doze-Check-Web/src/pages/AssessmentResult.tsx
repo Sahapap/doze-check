@@ -5,24 +5,33 @@ import LowRiskResultImg from '../assets/low-risk-result.png'
 import HighRiskSign from '../assets/high-risk-sign.png'
 import MediumRiskSign from '../assets/medium-risk-sign.png'
 import LowRiskSign from '../assets/low-risk-sign.png'
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const riskScore: number = 1
+// const riskScore: number = 1
 
 export default function AssessmentResult(){
     const location = useLocation()
     const navigate = useNavigate()
+    const [riskScore, setRiskScore] = useState<number>(0)
 
     useEffect(() => {
-        console.log("location state: ", location.state)
         if(!location.state) {
             alert('กรุณากรอกข้อมูลแบบทดสอบ')
             navigate("/register")
         }
+        const {riskAssessmentResult} = location.state
+        if(riskAssessmentResult === 'Low') setRiskScore(1)
+        else if (riskAssessmentResult === 'Medium') setRiskScore(2)
+        else if (riskAssessmentResult === 'High') setRiskScore(3)
+        else{
+            alert('กรุณากรอกข้อมูลแบบทดสอบ')
+            navigate("/register")
+        }
 
-        // call api to calculate score
     }, [location.state, navigate])
+
+
 
     const color = useMemo(() => {
         switch (riskScore){
@@ -30,50 +39,60 @@ export default function AssessmentResult(){
                 return '#00BB35'
             case 2: //Medium
                 return '#FF7000'
-            default: //High
+            case 3: //High
                 return '#920000'
+            default:
+                return '#FFF'
         }
-    }, [])
+    }, [riskScore])
     const imgSign = useMemo(() => {
         switch (riskScore){
             case 1: //Low
                 return LowRiskSign
             case 2: //Medium
                 return MediumRiskSign
-            default: //High
+            case 3: //High
                 return HighRiskSign
+            default:
+                return ""
         }
-    }, [])
+    }, [riskScore])
     const imgResult = useMemo(() => {
         switch (riskScore){
             case 1: //Low
                 return LowRiskResultImg
             case 2: //Medium
                 return MediumRiskResultImg
-            default: //High
+            case 3: //High
                 return HighRiskResultImg
+            default:
+                return ""
         }
-    }, [])
+    }, [riskScore])
     const wordingResult = useMemo(() => {
         switch (riskScore){
             case 1: //Low
                 return "น้อย"
             case 2: //Medium
                 return "ปานกลาง"
-            default: //High
+            case 3: //High
                 return "สูง"
+            default:
+                return ""
         }
-    }, [])
+    }, [riskScore])
     const descriptionResult = useMemo(() => {
         switch (riskScore){
             case 1: //Low
                 return "คุณเข้าเกณฑ์ความเสี่ยงน้อยต่อการเป็นโรคหยุดหายใจขณะหลับ"
             case 2: //Medium
                 return "คุณเข้าเกณฑ์ความเสี่ยงปานกลางต่อการเป็นโรคหยุดหายใจขณะหลับ"
-            default: //High
+            case 3: //High
                 return "คุณเข้าเกณฑ์ความเสี่ยงสูงต่อการเป็นโรคหยุดหายใจขณะหลับ"
+            default:
+                return ""
         }
-    }, [])
+    }, [riskScore])
 
     return(
         <div style={{ background: color, minHeight: '100vh' }}>

@@ -5,7 +5,8 @@ import FormLayout from '../layouts/FormLayout';
 import { Button, Card, CardContent, Divider, FormControl, FormHelperText, Radio, RadioGroup, Typography } from '@mui/material';
 import { CustomLabel } from '../components/CustomeRadioButton';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axiosInstance from '../api/axiosInstance';
 
 const schema = yup.object({
     isHasAccidentHistory: yup.string().required('กรุณาตอบคำถาม')
@@ -23,23 +24,40 @@ export default function AccidentHistoryAssessment(){
         resolver: yupResolver(schema)
     })
 
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
     useEffect(() => {
-        console.log("location state: ", location.state)
         if(!location.state) {
-            alert('กรุณากรอกข้อมูล Stop-Bang')
+            alert('กรุณากรอกข้อมูลและทำแบบสอบทดสอบ Stop-Bang และ Epworth ')
             navigate("/register")
         }
     }, [location.state, navigate])
 
-    const onSubmit = (data: AccidentHistoryAccessmentFormData) => {
-        console.log('data = ', data)
+    const onSubmit = async(data: AccidentHistoryAccessmentFormData) => {
+        setIsLoading(true)
         const stateData = location.state
-        navigate('/assessment-result', {
-            state: {
-                ...stateData,
-                accidentHistory: data
+
+        const payload = {
+            ...stateData,
+            accidentHistory: {
+                answer: Boolean(Number(data.isHasAccidentHistory))
             }
-        })
+        }
+        try{
+             //call API to calculated score
+            const res = await axiosInstance('/submit', { method: 'PUT', data: payload})
+
+            navigate('/assessment-result', {
+                state: {
+                    ...res.data
+                }
+            })
+        }catch(e){
+            console.error(e)
+            alert("เกิดข้อผิดพลาก กรุณาลองใหม่อีกครั้ง")
+        }finally{
+            setIsLoading(false)
+        }
     }
     return(
         <FormLayout
@@ -125,15 +143,13 @@ export default function AccidentHistoryAssessment(){
                             <Divider sx={{ my: 2, backgroundColor: '#473BF0' }} />
                         </CardContent>
                     </Card>
-                     <Card sx={{ mb: 1, boxShadow: 0 }}>
+                    <Card sx={{ mb: 1, boxShadow: 0 }}>
                         <CardContent sx={{ textAlign: 'center' }}>
                             <Button
                                 type="submit"
                                 variant="contained"
-                                // fullWidth
                                 size="large"
                                 sx={{
-                                    // mt: 3,
                                     py: 2,
                                     backgroundColor: '#223367   ',
                                     '&:hover': {
@@ -142,8 +158,9 @@ export default function AccidentHistoryAssessment(){
                                     fontSize: '1.1rem',
                                     fontWeight: 'bold',
                                 }}
+                                disabled={isLoading}
                             >
-                                ดูผลการประเมิน
+                                {isLoading ? "กำลังคำนวณ": "ดูผลการประเมิน"}
                             </Button>
                         </CardContent>
                     </Card>

@@ -14,7 +14,7 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import data from '../data/epworth.json'
+import EPWORTH_QUESTIONS from '../data/epworth.json'
 import FormLayout from '../layouts/FormLayout';
 import { CustomLabel, CustomRadio } from '../components/CustomeRadioButton';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -50,9 +50,8 @@ export default function EpworthAssessment() {
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     useEffect(() => {
-        console.log("location state: ", location.state)
         if(!location.state) {
-            alert('กรุณากรอกข้อมูล Stop-Bang')
+            alert('กรุณากรอกข้อมูล และทำแบบทดสอบ Stop-Bang')
             navigate("/register")
         }
     }, [location.state, navigate])
@@ -67,12 +66,20 @@ export default function EpworthAssessment() {
     });
 
     const onSubmit = (data: EpworthAssessmentFormData) => {
-        console.log('data', data)
         const stateData = location.state
+        const epworth = {
+            answers: EPWORTH_QUESTIONS.assessments.map(m => {
+                return {
+                    id: m.id,
+                    name: m.name,
+                    score: Number(data[m.name as keyof EpworthAssessmentFormData])
+                }
+            })
+        }
         navigate('/accident-history-assessment', {
             state: {
                 ...stateData,
-                epworth: data
+                epworth: epworth
             }
         })
     };
@@ -226,7 +233,7 @@ export default function EpworthAssessment() {
                             </Typography>
                         </CardContent>
                     </Card>
-                    {data?.assessments.map((assessment, i) => (
+                    {EPWORTH_QUESTIONS?.assessments.map((assessment, i) => (
                         // <Card key={assessment.id} sx={{ mb: 2, border: errors[`${assessment.name}` as keyof EpworthAssessmentFormData] ? '2px solid #d32f2f' : 'none' }}>
                         //     <CardContent>
                         //         <Typography variant="body1" sx={{ mb: 3, fontWeight: 500 }}>

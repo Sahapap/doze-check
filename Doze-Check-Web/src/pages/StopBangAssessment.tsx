@@ -16,7 +16,7 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import data from '../data/stopBang.json'
+import STOP_BANG_QUESTION from '../data/stopBang.json'
 import { useEffect, useMemo } from 'react';
 import FormLayout from '../layouts/FormLayout';
 import { CustomLabel, CustomRadio } from '../components/CustomeRadioButton';
@@ -78,7 +78,6 @@ export default function StopBangAssessment(){
     const height = watch('height');
 
     useEffect(() => {
-        console.log("location state: ", location.state)
         if(!location.state) {
             alert('กรุณากรอกข้อมูล Stop-Bang')
             navigate("/register")
@@ -99,12 +98,24 @@ export default function StopBangAssessment(){
     }, [bmi, setValue])
 
     const onSubmit = (data: IStopBangFormData) => {
-        console.log('Form submitted:', data);
         const stateData = location.state
+
+        const stopBangData = {
+            height: data.height,
+            weight: data.weight,
+            neckCircumference: data.neckCircumference,
+            answers: STOP_BANG_QUESTION.assessments.map(m => {
+                return {
+                    id: m.id,
+                    name: m.name,
+                    answer: Boolean(Number(data[m.name as keyof IStopBangFormData]))
+                }
+            })
+        }
         navigate('/epworth-assessment', {
             state: {
                 ...stateData,
-                stopBang: data
+                stopBang: stopBangData
             }
         })
     };
@@ -311,7 +322,7 @@ export default function StopBangAssessment(){
                     </Card>
 
                     {/* Questions */}
-                    {data.assessments.map((m) => {
+                    {STOP_BANG_QUESTION.assessments.map((m) => {
                         return(
                             <QuestionCard
                                 key={m.id}
