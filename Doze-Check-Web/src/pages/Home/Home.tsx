@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material'
-import BackgroundImg from '../../assets/background.jpg'
+import BackgroundImg from '../../assets/background-image.jpg'
 import Logo from '../../assets/logo.png'
 import './style.css'
 import { useNavigate } from 'react-router-dom'

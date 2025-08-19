@@ -16,7 +16,7 @@ import {
     Divider
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-import BackgroundImg from '../assets/background.jpg'
+import BackgroundImg from '../assets/background-image.jpg'
 import Logo from '../assets/logo.png'
 import data from '../data/hourSleepPerDay.json'
 import { useNavigate } from 'react-router-dom'
