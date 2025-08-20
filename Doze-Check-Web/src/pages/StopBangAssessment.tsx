@@ -10,14 +10,13 @@ import {
     RadioGroup,
     FormHelperText,
     TextField,
-    Chip,
     Divider,
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import STOP_BANG_QUESTION from '../data/stopBang.json'
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import FormLayout from '../layouts/FormLayout';
 import { CustomLabel, CustomRadio } from '../components/CustomeRadioButton';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -129,16 +128,16 @@ export default function StopBangAssessment(){
         <Card sx={{ mb: 1, boxShadow: 0, }}>
             <CardContent sx={{ pb: 0, pt: 0 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <Typography
-                    variant="h6"
-                    sx={{
-                        color: color,
-                        fontWeight: 'bold',
-                        fontSize: isMobile ? '1rem' : '1.1rem'
-                    }}
-                >
-                    {title}
-                </Typography>
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            color: color,
+                            fontWeight: 'bold',
+                            fontSize: isMobile ? '1rem' : '1.1rem'
+                        }}
+                    >
+                        {title}
+                    </Typography>
                 </Box>
                 <Typography
                 variant="body2"
@@ -209,6 +208,18 @@ export default function StopBangAssessment(){
         </Card>
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const weightLabelRef = useRef<any>(null)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const heightLabelRef = useRef<any>(null)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const neckLabelRef = useRef<any>(null)
+
+    useEffect(() => {
+        if(weightLabelRef.current) weightLabelRef.current.style.textAlign = "center"
+        if(heightLabelRef.current) heightLabelRef.current.style.textAlign = "center"
+        if(neckLabelRef.current) neckLabelRef.current.style.textAlign = "center"
+    }, [])
 
     return(
         <FormLayout
@@ -239,61 +250,129 @@ export default function StopBangAssessment(){
                     {/* Weight and Height */}
                     <Card sx={{ mb: 1, boxShadow: 0 }}>
                         <CardContent>
-                            <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row',}}>
-                                <Controller
-                                    name="weight"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            label="น้ำหนัก"
-                                            type="number"
-                                            fullWidth
-                                            InputProps={{ endAdornment: 'กก' }}
-                                            error={!!errors.weight}
-                                            helperText={errors.weight?.message}
-                                            onChange={(e) => field.onChange(parseFloat(e.target.value))}
-                                        />
-                                    )}
-                                />
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        color: '#473BF0',
+                                        fontWeight: 'bold',
+                                        fontSize: isMobile ? '1rem' : '1.1rem'
+                                    }}
+                                >
+                                    น้ำหนัก
+                                </Typography>
                             </Box>
-                        </CardContent>
-                    </Card>
-
-                    <Card sx={{ mb: 1, boxShadow: 0 }}>
-                        <CardContent>
-                            <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', }}>
-                                <Controller
-                                    name="height"
-                                    control={control}
-                                    render={({ field }) => (
-                                        <TextField
+                            <Controller
+                                name="weight"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField
                                         {...field}
-                                        label="ส่วนสูง"
+                                        placeholder='โปรดระบุ'
                                         type="number"
                                         fullWidth
-                                        InputProps={{ endAdornment: 'ซม' }}
-                                        error={!!errors.height}
-                                        helperText={errors.height?.message}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <TextField
+                                                    disabled={true}
+                                                    sx={{ width: '81px', backgroundColor: '#F2F2F2', textAlign: 'center'}}
+                                                    value={"กก."}
+                                                    style={{ textAlign: 'center'}}
+                                                    inputRef={weightLabelRef}
+                                                />
+                                            ),
+                                            style: {paddingRight: 0}
+                                        }}
+                                        error={!!errors.weight}
+                                        helperText={errors.weight?.message}
                                         onChange={(e) => field.onChange(parseFloat(e.target.value))}
-                                        />
-                                    )}
-                                />
+                                    />
+                                )}
+                            />
+                        </CardContent>
+                    </Card>
+                    <Card sx={{ mb: 0, boxShadow: 0 }}>
+                        <CardContent style={{ paddingBottom: 0}}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        color: '#473BF0',
+                                        fontWeight: 'bold',
+                                        fontSize: isMobile ? '1rem' : '1.1rem'
+                                    }}
+                                >
+                                    ส่วนสูง
+                                </Typography>
                             </Box>
+                            <Controller
+                                name="height"
+                                control={control}
+                                render={({ field }) => (
+                                    <TextField
+                                    {...field}
+                                    placeholder='โปรดระบุ'
+                                    type="number"
+                                    fullWidth
+                                    InputProps={{
+                                        endAdornment: (
+                                            <TextField
+                                                disabled={true}
+                                                sx={{ width: '81px', backgroundColor: '#F2F2F2'}}
+                                                value={"ซม."}
+                                                style={{ textAlign: 'center'}}
+                                                inputRef={heightLabelRef}
+                                            />
+                                        ),
+                                        style: {paddingRight: 0}
+                                    }}
+                                    error={!!errors.height}
+                                    helperText={errors.height?.message}
+                                    onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                                    />
+                                )}
+                            />
                         </CardContent>
                     </Card>
 
                     {bmi > 0 && (
                         <Card sx={{ mb: 0, boxShadow: 0 }}>
                             <CardContent>
-                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <Chip
-                                            label={`BMI: ${bmi}`}
-                                            color={bmi >= 25 ? 'error' : bmi >= 23 ? 'warning' : 'success'}
-                                            // size="large"
-                                            sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}
-                                        />
-                                    </Box>
+                                <Box
+                                    sx={{
+                                        backgroundColor: bmi >= 25 ? '#e83131ff' : bmi >= 23 ? '#fadc1aff' :'#4CAF50', // Green color matching the image
+                                        borderRadius: '12px',
+                                        padding: '16px 24px',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        minWidth: '200px',
+                                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                                    }}
+                                >
+                                    <Typography
+                                        sx={{
+                                            color: 'white',
+                                            fontWeight: 600,
+                                            fontSize: '18px',
+                                            letterSpacing: '0.5px',
+                                        }}
+                                        variant='h6'
+                                    >
+                                        BMI
+                                    </Typography>
+                                    <Typography
+                                        sx={{
+                                            color: 'white',
+                                            fontWeight: 700,
+                                            fontSize: '32px',
+                                            lineHeight: 1,
+                                        }}
+                                        variant='h4'
+                                    >
+                                        {bmi}
+                                    </Typography>
+                                </Box>
                             </CardContent>
                         </Card>
                     )}
@@ -301,18 +380,41 @@ export default function StopBangAssessment(){
                     {/* Neck Circumference */}
                     <Card sx={{ mb: 1, boxShadow: 0 }}>
                         <CardContent>
+                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        color: '#473BF0',
+                                        fontWeight: 'bold',
+                                        fontSize: isMobile ? '1rem' : '1.1rem'
+                                    }}
+                                >
+                                    เส้นรอบวงคอ
+                                </Typography>
+                            </Box>
                             <Controller
                                 name="neckCircumference"
                                 control={control}
                                 render={({ field }) => (
                                 <TextField
                                     {...field}
-                                    label="เส้นรอบวงคอ"
+                                    placeholder='โปรดระบุ'
                                     type="number"
                                     fullWidth
-                                    InputProps={{ endAdornment: 'ซม' }}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <TextField
+                                                disabled={true}
+                                                sx={{ width: '81px', backgroundColor: '#F2F2F2'}}
+                                                value={"ซม."}
+                                                style={{ textAlign: 'center'}}
+                                                inputRef={neckLabelRef}
+                                            />
+                                        ),
+                                        style: {paddingRight: 0}
+                                    }}
                                     error={!!errors.neckCircumference}
-                                    helperText={errors.neckCircumference?.message || 'วัดเส้นรอบวงคอระดับลูกอาดัม'}
+                                    helperText={errors.neckCircumference?.message}
                                     onChange={(e) => field.onChange(parseFloat(e.target.value))}
                                 />
                                 )}
