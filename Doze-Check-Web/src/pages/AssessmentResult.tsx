@@ -105,11 +105,11 @@ export default function AssessmentResult(){
                         <Divider sx={{ my: 2, backgroundColor: {color}, width: '93px', height: '6px', margin: 'auto' }} />
                     </CardContent>
                     <div style={{ textAlign: 'right', paddingLeft: '10%' }}>
-                        <img src={imgSign} width={'10%'} />
+                        <img src={imgSign} width={'10%'} style={{ paddingRight: '5%'}}/>
                     </div>
                     <CardContent sx={{ pt: 0 }}>
                         {/* Image */}
-                        <img src={imgResult} width={'34%'} />
+                        <img src={imgResult} width={'29%'}/>
                     </CardContent>
                     <CardContent sx={{ pb: 0 }}>
                         <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1, color: '#223367' }}>
