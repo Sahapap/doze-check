@@ -37,11 +37,14 @@ app.use((req, res, next) => {
 })
 
 app.use('/api/example', exampleRouter);
-
 app.use('/api/stop-bang', stopBangRouter);
 app.use('/api/hour-sleep-per-day', hourSleepPerDayRouter)
 app.use('/api/epworth', epworthRouter)
 app.use('/api/accident-history', accidentHistoryRouter)
 app.use('/api/submit', submitFormRouter)
+
+app.get('/api/health', (req, res) => {
+    res.send('OK')
+})
 
 export default app;
