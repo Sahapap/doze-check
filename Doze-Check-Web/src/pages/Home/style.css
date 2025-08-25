@@ -1,6 +1,6 @@
 .image-div{
     text-align: center;
-    padding-top: 125px;
+    padding-top: 100px;
 }
 
 .message-div{
@@ -14,8 +14,8 @@
 .image-div > img {
     border-radius: 60%;
     background-color: #FFFF;
-    border: 5px solid #FFD000;
-    width: 325px;
+    border: 10px solid #FFD000;
+    width: 300px;
     top: 200px;
 }
 
