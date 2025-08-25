@@ -33,6 +33,10 @@ export default function AccidentHistoryAssessment(){
         }
     }, [location.state, navigate])
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     const onSubmit = async(data: AccidentHistoryAccessmentFormData) => {
         setIsLoading(true)
         const stateData = location.state

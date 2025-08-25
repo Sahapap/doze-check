@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Box,
     TextField,
@@ -47,6 +47,10 @@ const RegisterPage: React.FC = () => {
             state: data
         })
     };
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <Box

@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import BackgroundImg from '../../assets/background-image.jpg'
 import Logo from '../../assets/logo.png'
 import './style.css'
@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 
 function Home(){
     const navigate = useNavigate()
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     return(
         <Box
             sx={{
@@ -15,7 +17,7 @@ function Home(){
                 backgroundImage: `url(${BackgroundImg})`,
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
-                backgroundSize: "contain", // ensures no cropping
+                backgroundSize: isMobile ? "cover" : "contain", // ensures no cropping
                 overflow: 'hidden',
                 aspectRatio: '16/9',
                 '@media (max-width:344px)': {
