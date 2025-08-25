@@ -56,6 +56,10 @@ export default function EpworthAssessment() {
         }
     }, [location.state, navigate])
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     const {
         control,
         handleSubmit,

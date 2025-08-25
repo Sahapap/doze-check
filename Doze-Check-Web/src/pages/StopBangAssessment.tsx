@@ -83,6 +83,10 @@ export default function StopBangAssessment(){
         }
     }, [location.state, navigate])
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     // Calculate BMI
     const calculateBMI = (weight: number, height: number): number => {
         if (!weight || !height) return 0;
