@@ -206,26 +206,26 @@ export default function EpworthAssessment() {
             }
             formBody={
                 <form onSubmit={handleSubmit(onSubmit)}>
-                     <Card sx={{ mb: 1, mt: 1, boxShadow: 0 }}>
+                    <Card sx={{ mb: 1, mt: 1, boxShadow: 0 }}>
                         <CardContent>
                             <Box sx={{ bgcolor: '#E9E9E9', pr: '10px', pl:'10px', pt: '6px', pb: '6px', borderRadius: 0 }}>
                                 <Typography variant="body2" paragraph mb={0}>
-                                    <strong>0 หมายถึง</strong><br/>ไม่มีความเป็นไปได้ที่จะหลับหรือแสดงอาการซึม
+                                    <strong>0 หมายถึง</strong><br/>ไม่มีความเป็นไปได้ที่จะงีบหรือเผลอหลับ
                                 </Typography>
                             </Box>
                             <Box sx={{ bgcolor: '#F4F4F4', pr: '10px', pl:'10px', pt: '6px', pb: '6px', borderRadius: 0 }}>
                                 <Typography variant="body2" paragraph mb={0}>
-                                    <strong>1 หมายถึง</strong><br/>มีความเป็นไปได้ที่จะหลับหรือแสดงอาการซึม เล็กน้อย (น้อยกว่า 50%)
+                                    <strong>1 หมายถึง</strong><br/>มีความเป็นไปได้ที่จะงีบหรือเผลอหลับ เล็กน้อย (นานๆครั้ง)
                                 </Typography>
                             </Box>
                             <Box sx={{ bgcolor: '#E9E9E9', pr: '10px', pl:'10px', pt: '6px', pb: '6px', borderRadius: 0 }}>
                                 <Typography variant="body2" paragraph mb={0}>
-                                    <strong>2 หมายถึง</strong><br/>มีความเป็นไปได้ที่จะหลับหรือแสดงอาการซึม ปานกลาง
+                                    <strong>2 หมายถึง</strong><br/>มีความเป็นไปได้ที่จะงีบหรือเผลอหลับ ปานกลาง
                                 </Typography>
                             </Box>
                             <Box sx={{ bgcolor: '#F4F4F4', pr: '10px', pl:'10px', pt: '6px', pb: '6px', borderRadius: 0 }}>
                                 <Typography variant="body2" mb={0}>
-                                    <strong>3 หมายถึง</strong><br/>มีความเป็นไปได้ที่จะหลับหรือแสดงอาการซึม สูง (มากกว่า 50%)
+                                    <strong>3 หมายถึง</strong><br/>มีความเป็นไปได้ที่จะงีบหรือเผลอหลับ สูง (เป็นประจำ)
                                 </Typography>
                             </Box>
                         </CardContent>
@@ -233,7 +233,7 @@ export default function EpworthAssessment() {
                     <Card sx={{ mb: 1, boxShadow: 0 }}>
                         <CardContent>
                             <Typography>
-                                ให้คะแนนความมีโอกาสจะงีบหลับ ในสถานการณ์ต่อไปนี้
+                                ให้คะแนนความมีโอกาสจะงีบหรือเผลอหลับ ในสถานการณ์ต่อไปนี้
                             </Typography>
                         </CardContent>
                     </Card>
