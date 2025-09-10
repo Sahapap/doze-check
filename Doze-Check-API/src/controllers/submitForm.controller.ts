@@ -1,3 +1,4 @@
+import { AssessmentScore, RiskLevel } from '../enums/AssessmentScore';
 import { realtimeDB } from '../firebase/firebase'
 import { RiskScore } from '../interfaces/RiskScore';
 import { ISubmitForm } from '../interfaces/SubmitForm';
@@ -45,17 +46,30 @@ const calculateRisk = (data: ISubmitForm): RiskScore => {
 
     const accidentHistoryScore = data.accidentHistory.answer ? 1 : 0
 
-    const riskScore = [
-        stopBangScore >= 3 ? 1 : 0,
-        epworthScore >= 10 ? 1 : 0,
+    const riskScore: number = [
+        stopBangScore >= AssessmentScore.stopBang ? 1 : 0,
+        epworthScore >= AssessmentScore.epworth ? 1 : 0,
         accidentHistoryScore
     ].reduce((acc, curr) => acc+=curr, 0)
+
+    let riskAssessmentResult: RiskLevel
+    switch(riskScore){
+        case 3:
+            riskAssessmentResult = RiskLevel.high;
+            break
+        case 2:
+            riskAssessmentResult = RiskLevel.medium
+            break
+        default:
+            riskAssessmentResult = RiskLevel.low
+            break
+    }
 
     return {
         stopBangScore: stopBangScore,
         epworthScore: epworthScore,
         accidentHistoryScore: accidentHistoryScore,
-        riskAssessmentResult: riskScore === 3 ? 'High' : riskScore === 2 ? 'Medium' : 'Low'
+        riskAssessmentResult: riskAssessmentResult
     }
 }
 

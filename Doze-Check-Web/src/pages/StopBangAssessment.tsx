@@ -344,7 +344,7 @@ export default function StopBangAssessment(){
                             <CardContent>
                                 <Box
                                     sx={{
-                                        backgroundColor: bmi >= 25 ? '#e83131ff' : bmi >= 23 ? '#fadc1aff' :'#4CAF50', // Green color matching the image
+                                        backgroundColor: bmi >30 ? '#e83131ff' : 'rgba(0, 0, 0, 0.2)',
                                         borderRadius: '12px',
                                         padding: '16px 24px',
                                         display: 'flex',
