@@ -34,9 +34,15 @@ function Home(){
             </div>
             <div style={{ width: '100%', paddingTop: '15px' }}>
                 <div className='message-div'>
-                    <Typography color='white' fontSize={'26px'} textAlign={'center'}>
-                    แบบประเมินความเสี่ยงจากโรคหยุดหายใจขณะหลับจากการอุดกั้น
-                </Typography>
+                    <Typography color='white' fontSize={isMobile ? '23px' : '26px'} textAlign={'center'}>
+                        แบบประเมินความเสี่ยง
+                    </Typography>
+                    <Typography color='white' fontSize={isMobile ? '23px' : '26px'} textAlign={'center'}>
+                        จากโรคหยุดหายใจ
+                    </Typography>
+                    <Typography color='white' fontSize={isMobile ? '23px' : '26px'} textAlign={'center'}>
+                        ขณะหลับจากการอุดกั้น
+                    </Typography>
                 </div>
             </div>
             <div style={{ textAlign: 'center', paddingTop: '2%'}}>
