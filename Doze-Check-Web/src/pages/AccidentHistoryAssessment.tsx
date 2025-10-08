@@ -49,7 +49,7 @@ export default function AccidentHistoryAssessment(){
         }
         try{
              //call API to calculated score
-            const res = await axiosInstance('/submit', { method: 'PUT', data: payload})
+            const res = await axiosInstance('/submit', { method: 'POST', data: payload})
 
             navigate('/assessment-result', {
                 state: {
@@ -85,18 +85,6 @@ export default function AccidentHistoryAssessment(){
                                     <FormControl error={!!errors['isHasAccidentHistory']} fullWidth>
                                         <RadioGroup
                                             {...field}
-                                            // row={!isMobile}
-                                            sx={{
-                                                // justifyContent: isMobile ? 'flex-start' : 'space-between',
-                                                // gap: 0.5,
-                                                // display: 'flex',
-                                                // flexDirection: 'row',
-                                                // border: '1px solid #d1d5db',
-                                                // borderRadius: '8px',
-                                                // overflow: 'hidden',
-                                                // backgroundColor: '#ffffff',
-                                                // boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                                            }}
                                         >
                                             <CustomLabel
                                                 value={1}
@@ -131,7 +119,6 @@ export default function AccidentHistoryAssessment(){
                                                 sx={{
                                                     backgroundColor: field.value === '0' ? '#EDECFE' : '#F8F9FB',
                                                     color: field.value === '0' ? '#4E4D49' : '#4E4D49',
-                                                    // paddingLeft: 0
                                                     textAlign: 'left'
                                                 }}
                                             />
