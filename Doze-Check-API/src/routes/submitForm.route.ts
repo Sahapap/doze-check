@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { submitAssessment } from '../controllers/submitForm.controller'
+import { submitAssessment } from '../controllers/submitForm.controller';
 
 const router = Router();
 
