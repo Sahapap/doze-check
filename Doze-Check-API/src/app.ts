@@ -8,6 +8,7 @@ import epworthRouter from './routes/epworth.route'
 import accidentHistoryRouter from './routes/accidentHistory.route'
 import submitFormRouter from './routes/submitForm.route'
 import hourSleepPerDayRouter from './routes/hourSleepPerDay.route'
+import reportRouter from './routes/report.route'
 import { toCamelCase, toSnakeCase } from './utils/convertObject';
 import rateLimit from 'express-rate-limit';
 
@@ -55,6 +56,7 @@ app.use('/api/hour-sleep-per-day', hourSleepPerDayRouter)
 app.use('/api/epworth', epworthRouter)
 app.use('/api/accident-history', accidentHistoryRouter)
 app.use('/api/submit', limiter, submitFormRouter)
+app.use('/api/report', reportRouter)
 
 app.get('/api/health', (req, res) => {
     res.send('OK')

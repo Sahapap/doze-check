@@ -5,9 +5,9 @@ function toCamelCase(obj: any): any {
         return obj.map(toCamelCase);
     } else if (obj !== null && typeof obj === 'object') {
         return Object.keys(obj).reduce((acc: any, key: string) => {
-        const camelKey = _.camelCase(key);
-        acc[camelKey] = toCamelCase(obj[key]);
-        return acc;
+            const camelKey = _.camelCase(key);
+            acc[camelKey] = toCamelCase(obj[key]);
+            return acc;
         }, {});
     }
     return obj;
