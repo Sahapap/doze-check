@@ -1,7 +1,7 @@
 {
     "topic": "แบบประเมิน STOP-Bang",
     "description": "โปรดตอบคำถามต่อไปนี้",
-    "assessments":[
+    "assessments": [
         {
             "id": "stop-bang-01",
             "name": "snoring",
