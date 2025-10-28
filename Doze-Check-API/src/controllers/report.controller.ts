@@ -1,6 +1,6 @@
 import { realtimeDB } from '../firebase/firebase'
 import { toCamelCase } from '../utils/convertObject'
-import { FirebaseResponse, StopBangAnswer } from '../interfaces/FirebaseResponse'
+import { FirebaseResponse } from '../interfaces/FirebaseResponse'
 import { DashboardData } from '../interfaces/Report'
 
 // จำนวนทั้งหมด
