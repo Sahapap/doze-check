@@ -1,5 +1,5 @@
-import admin from 'firebase-admin'
 import 'dotenv/config'
+import admin from 'firebase-admin'
 var serviceAccount = require("./doze-check-firebase-adminsdk-fbsvc-e191e0acaa.json")
 
 admin.initializeApp({
