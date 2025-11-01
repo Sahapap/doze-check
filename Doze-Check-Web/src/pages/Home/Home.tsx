@@ -25,6 +25,12 @@ function Home(){
                 },
             }}
         >
+            <Button
+                sx={{ position: 'fixed', top: '1px', right: '1px' }}
+                onClick={() => navigate('/login')}
+            >
+                สำหรับผู้ดูแล
+            </Button>
             <div
                 className='image-div'
             >
