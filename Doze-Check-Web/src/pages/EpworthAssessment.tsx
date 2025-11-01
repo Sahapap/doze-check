@@ -90,10 +90,9 @@ export default function EpworthAssessment() {
 
     const QuestionCard: React.FC<{
         title: string;
-        // description: string;
         name: keyof EpworthAssessmentFormData;
         color?: string;
-    }> = ({ title, /*description,*/ name, color = '#6366f1' }) => (
+    }> = ({ title, name, color = '#6366f1' }) => (
         <Card sx={{ mb: 1, boxShadow: 0, }}>
             <CardContent sx={{ pb: 0, pt: 0 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -132,7 +131,6 @@ export default function EpworthAssessment() {
                                 value="0"
                                 control={<CustomRadio />}
                                 label="0"
-                                //   checked={selectedValue === 'ไม่ใช่'}
                                 sx={{
                                     borderTopLeftRadius: '8px',
                                     borderBottomLeftRadius: '8px',
@@ -238,43 +236,6 @@ export default function EpworthAssessment() {
                         </CardContent>
                     </Card>
                     {EPWORTH_QUESTIONS?.assessments.map((assessment, i) => (
-                        // <Card key={assessment.id} sx={{ mb: 2, border: errors[`${assessment.name}` as keyof EpworthAssessmentFormData] ? '2px solid #d32f2f' : 'none' }}>
-                        //     <CardContent>
-                        //         <Typography variant="body1" sx={{ mb: 3, fontWeight: 500 }}>
-                        //             {assessment.question}
-                        //         </Typography>
-
-                        //         <Controller
-                        //             name={`${assessment.name}` as keyof EpworthAssessmentFormData}
-                        //             control={control}
-                        //             defaultValue=""
-                        //             render={({ field }) => (
-                        //             <RadioGroup {...field}>
-                        //                 {data.options.map((option) => (
-                        //                 <FormControlLabel
-                        //                     key={option.value}
-                        //                     value={option.value}
-                        //                     control={<Radio />}
-                        //                     label={option.label}
-                        //                     sx={{
-                        //                     mb: 1,
-                        //                     '& .MuiFormControlLabel-label': {
-                        //                         fontSize: '0.95rem'
-                        //                     }
-                        //                     }}
-                        //                 />
-                        //                 ))}
-                        //             </RadioGroup>
-                        //             )}
-                        //         />
-
-                        //         {errors[`${assessment.name}` as keyof EpworthAssessmentFormData] &&
-                        //             <Typography color="error" variant="caption" sx={{ mt: 1, display: 'block' }}>
-                        //                 {errors[`${assessment.name}` as keyof EpworthAssessmentFormData]?.message}
-                        //             </Typography>
-                        //         }
-                        //     </CardContent>
-                        // </Card>
                         <QuestionCard
                             key={`epworth-question-${i}`}
                             title={assessment.question}
@@ -307,6 +268,5 @@ export default function EpworthAssessment() {
                 </form>
             }
         />
-        
     );
 }

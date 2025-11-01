@@ -189,7 +189,6 @@ export default function StopBangAssessment(){
                                 value="0"
                                 control={<CustomRadio />}
                                 label="ไม่ใช่"
-                                //   checked={selectedValue === 'ไม่ใช่'}
                                 sx={{
                                     borderTopRightRadius: '8px',
                                     borderBottomRightRadius: '8px',
