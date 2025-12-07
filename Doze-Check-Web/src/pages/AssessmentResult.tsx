@@ -8,8 +8,6 @@ import LowRiskSign from '../assets/low-risk-sign.png'
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-// const riskScore: number = 1
-
 export default function AssessmentResult(){
     const location = useLocation()
     const navigate = useNavigate()

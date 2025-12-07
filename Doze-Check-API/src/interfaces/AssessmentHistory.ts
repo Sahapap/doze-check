@@ -1,8 +1,4 @@
-export interface FirebaseResponse {
-    [key: string]: Person;
-}
-
-interface Person {
+export interface Person {
     accidentHistory: {
         answer: boolean;
     };
@@ -22,7 +18,7 @@ interface Person {
     };
 }
 
-interface EpworthAnswer {
+export interface EpworthAnswer {
     id: string;
     name: string;
     score: number;

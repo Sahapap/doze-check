@@ -2,6 +2,7 @@ import { AssessmentScore, RiskLevel } from '../enums/AssessmentScore';
 import { realtimeDB } from '../firebase/firebase'
 import { RiskScore } from '../interfaces/RiskScore';
 import { ISubmitForm } from '../interfaces/SubmitForm';
+import { PersonModel } from '../models/Person';
 
 interface ISumbitAssessmentResponse extends RiskScore {
     action: 'inserted' | 'update'
@@ -9,29 +10,28 @@ interface ISumbitAssessmentResponse extends RiskScore {
 }
 
 const submitAssessment = async(payload: ISubmitForm): Promise<ISumbitAssessmentResponse> => {
-    const snapshot = await realtimeDB.ref('messages')
-        .orderByChild('keyName')
-        .equalTo(`${payload.firstName}_${payload.lastName}`)
-        .once('value')
-
+    const existData = await PersonModel.findOne({
+        keyName: `${payload.firstName}_${payload.lastName}`
+    })
     const riskScore = calculateRisk(payload)
     let res: any = {};
-    if(snapshot.exists()){
-        //update
-        const firstKey = Object.keys(snapshot.val())[0];
-        await realtimeDB.ref(`messages/${firstKey}`).update(payload);
-        res = {action: "update", id: firstKey}
+    if(existData){
+        await PersonModel.updateOne({
+            keyName: `${payload.firstName}_${payload.lastName}`
+        }, {
+            $set: {
+                ...payload
+            }
+        })
     }else{
-        // creatte new
-        const newRef = realtimeDB.ref('messages').push();
-        await newRef.set({
+        await PersonModel.create({
             ...payload,
             keyName: `${payload.firstName}_${payload.lastName}`
-        });
-        res = { action: "inserted", id: newRef.key }
+        })
     }
 
     return {...res, ...riskScore}
+
 }
 
 const calculateRisk = (data: ISubmitForm): RiskScore => {

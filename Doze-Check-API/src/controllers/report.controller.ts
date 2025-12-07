@@ -1,7 +1,6 @@
-import { realtimeDB } from '../firebase/firebase'
-import { toCamelCase } from '../utils/convertObject'
-import { FirebaseResponse } from '../interfaces/FirebaseResponse'
+import { Person } from '../interfaces/AssessmentHistory'
 import { DashboardData } from '../interfaces/Report'
+import { PersonModel } from '../models/Person'
 
 // จำนวนทั้งหมด
 // จำนวนชาย
@@ -32,9 +31,7 @@ interface IAccidentHistoryResultStatistic{
 }
 
 const getReport = async() => {
-    const snapshot = await realtimeDB.ref('messages').once('value')
-    const data = snapshot.val()
-    const formatData: FirebaseResponse = toCamelCase(data)
+    const formatData: Person[] = await PersonModel.find()
 
     let maleCount = 0, femaleCount = 0, total = 0
     let ageMoreThanFifty = 0, ageLessThanFifty = 0
@@ -62,9 +59,8 @@ const getReport = async() => {
         yes: 0,
         no: 0
     }
-    total = Object.keys(formatData).length
-    Object.keys(formatData).forEach(key => {
-        const current = formatData[key]
+    total = formatData.length
+    formatData.forEach(current => {
         const gender = current.stopBang?.answers.find(f => f.name === "gender")
         if(gender?.answer){
             maleCount +=1
