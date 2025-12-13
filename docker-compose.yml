@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./doze-check-web
+      dockerfile: Dockerfile
+    container_name: doze-check-web
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./doze-check-api
+      dockerfile: Dockerfile
+    container_name: doze-check-api
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      MONGO_URI: mongodb://dozecheck:dozecheck123@mongo:27017/doze?authSource=admin
+      ADMIN_USERNAMES: admin
+      ADMIN_PASSWORDS: _Dozecheck888
+      ACCESS_SECRET: 9ca08006f9fe10117ae09b7e5065d9dd4efae9419b4025a00df22f0678e721cb
+      REFRESH_SECRET: c39432afd36fc45b31727245c527b7bb728df31e9d2a7ffbefb874053de239e0
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:7
+    container_name: doze-check-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dozecheck
+      MONGO_INITDB_ROOT_PASSWORD: dozecheck123
+      MONGO_INITDB_DATABASE: doze
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
