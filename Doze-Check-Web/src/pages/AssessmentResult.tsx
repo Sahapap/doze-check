@@ -152,6 +152,7 @@ export default function AssessmentResult(){
                                     height: '55px',
                                     color: '#FFFFFF'
                                 }}
+                                onClick={() => navigate('/')}
                             >
                                 ออกจากระบบ
                             </Button>
