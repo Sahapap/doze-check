@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // api/axiosInstance.ts
-import axios from 'axios';
+import axios from "axios";
 
 function toCamelCase(str: string): string {
   return str.replace(/_([a-z])/g, (_, char) => char.toUpperCase());
@@ -20,22 +20,22 @@ function keysToCamelCase(obj: any): any {
 }
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api', // Replace or use env
+  baseURL: "https://dozecheck.scfc.cmu.ac.th/api", // Replace or use env
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 // Optional: Add response interceptor
 axiosInstance.interceptors.response.use(
   (response) => {
-    response.data = keysToCamelCase(response.data)
-    return response
+    response.data = keysToCamelCase(response.data);
+    return response;
   },
   (error) => {
     // Example: Handle token expiration or logging
-    console.error('API Error:', error);
+    console.error("API Error:", error);
     return Promise.reject(error);
   }
 );
