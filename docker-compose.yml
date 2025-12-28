@@ -2,23 +2,21 @@ version: "3.9"
 
 services:
   frontend:
-    build:
-      context: ./doze-check-web
-      dockerfile: Dockerfile
+    image: tanakornon/doze-check-web:latest
     container_name: doze-check-web
     ports:
-      - "80:80"
+      - "3000:80"
+    environment:
+      VITE_API_BASE_URL: https://dozecheck.scfc.cmu.ac.th/api
     depends_on:
       - api
     restart: unless-stopped
 
   api:
-    build:
-      context: ./doze-check-api
-      dockerfile: Dockerfile
+    image: tanakornon/doze-check-api:latest
     container_name: doze-check-api
     ports:
-      - "3000:3000"
+      - "8443:3000"
     environment:
       NODE_ENV: production
       MONGO_URI: mongodb://dozecheck:dozecheck123@mongo:27017/doze?authSource=admin
