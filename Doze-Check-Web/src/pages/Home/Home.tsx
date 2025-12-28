@@ -64,7 +64,7 @@ function Home(){
                         background: 'linear-gradient(45deg, #5a6fd8 30%, #6a4190 90%)',
                         }
                     }}
-                    onClick={() => navigate('/register')}
+                    onClick={() => navigate('/pdpa')}
                 >
                     เริ่มทำแบบสอบถาม
                 </Button>

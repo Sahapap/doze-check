@@ -19,7 +19,7 @@ import { useForm, Controller } from 'react-hook-form';
 import BackgroundImg from '../assets/background-image.jpg'
 import Logo from '../assets/logo.png'
 import data from '../data/hourSleepPerDay.json'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 interface FormData {
     firstName: string;
@@ -30,6 +30,7 @@ interface FormData {
 
 const RegisterPage: React.FC = () => {
     const navigate = useNavigate()
+    const location = useLocation()
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         defaultValues: {
         firstName: '',
@@ -50,7 +51,12 @@ const RegisterPage: React.FC = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [])
+
+        if(!location.state){
+            navigate('/pdpa')
+        }
+    }, [location, navigate])
+
 
     return (
         <Box

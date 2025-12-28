@@ -10,6 +10,7 @@ const AssessmentResult = lazy(() => import('./pages/AssessmentResult'))
 
 const Login = lazy(() => import('./pages/Login'))
 const ReportPage = lazy(() => import('./pages/Report'))
+const PDPAPage = lazy(() => import('./pages/PDPA'))
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
 
 				<Route path='/login' element={<Login/>} />
 				<Route path='/report' element={<ReportPage/>} />
+				<Route path='/pdpa' element={<PDPAPage/>} />
 			</Routes>
 		</Suspense>
 	)
